@@ -8,8 +8,69 @@
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="manifest" href="manifest.webmanifest">
     <script src="TemplateData/ConvaiWebGLSDK.js"></script>
+
+    <!-- ⭐ MODAL FUNCTIONS (NECESARIAS PARA UNITY WebGL) -->
+    <script>
+      function OpenBookModal(url) {
+        const modal = document.getElementById("bookModal");
+        const frame = document.getElementById("bookFrame");
+        frame.src = url;
+        modal.style.display = "flex";
+      }
+
+      function CloseBookModal() {
+        const modal = document.getElementById("bookModal");
+        const frame = document.getElementById("bookFrame");
+        frame.src = "";
+        modal.style.display = "none";
+      }
+    </script>
+
+    <!-- ⭐ MODAL STYLE -->
+    <style>
+      #bookModal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 9999;
+      }
+      #bookFrame {
+        width: 80%;
+        height: 80%;
+        border: none;
+        background: white;
+        border-radius: 10px;
+      }
+      #closeBookBtn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: red;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 20px;
+        z-index: 10000;
+      }
+    </style>
+
   </head>
+
   <body>
+
+    <!-- ⭐ MODAL HTML -->
+    <div id="bookModal">
+      <div id="closeBookBtn" onclick="CloseBookModal()">X</div>
+      <iframe id="bookFrame"></iframe>
+    </div>
+
     <div id="unity-container">
       <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
@@ -20,6 +81,8 @@
       </div>
       <div id="unity-warning"> </div>
     </div>
+
+    <!-- 🌐 Unity loader -->
     <script>
       window.addEventListener("load", function () {
         if ("serviceWorker" in navigator) {
@@ -33,12 +96,6 @@
       var progressBarFull = document.querySelector("#unity-progress-bar-full");
       var warningBanner = document.querySelector("#unity-warning");
 
-      // Shows a temporary message banner/ribbon for a few seconds, or
-      // a permanent error message on top of the canvas if type=='error'.
-      // If type=='warning', a yellow highlight color is used.
-      // Modify or remove this function to customize the visually presented
-      // way that non-critical warnings and error messages are presented to the
-      // user.
       function unityShowBanner(msg, type) {
         function updateBannerVisibility() {
           warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
@@ -58,11 +115,11 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/cee3bfd5589651a8b16e2a12b8abe5b3.loader.js";
+      var loaderUrl = buildUrl + "/e44a56aec4ea4bd146e240f5611f96db.loader.js";
       var config = {
-        dataUrl: buildUrl + "/9729a392c08e92b86faafba7c6326659.data.unityweb",
-        frameworkUrl: buildUrl + "/0110c139a0f9bedb85dad73d8bbfe4a6.framework.js.unityweb",
-        codeUrl: buildUrl + "/7241a171b4d082551c510f804e0c1091.wasm.unityweb",
+        dataUrl: buildUrl + "/6506327d635a3a7f61b6f3cb3cc2967b.data",
+        frameworkUrl: buildUrl + "/afdc48bbd36607ce00828760d9abcea7.framework.js",
+        codeUrl: buildUrl + "/c30e717472ba502246fe2fd401644a05.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "Metaverso",
@@ -70,15 +127,7 @@
         showBanner: unityShowBanner,
       };
 
-      // By default Unity keeps WebGL canvas render target size matched with
-      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
-      // Set this to false if you want to decouple this synchronization from
-      // happening inside the engine, and you would instead like to size up
-      // the canvas DOM size and WebGL render target sizes yourself.
-      // config.matchWebGLToCanvasSize = false;
-
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
         meta.name = 'viewport';
         meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
@@ -100,5 +149,20 @@
       };
       document.body.appendChild(script);
     </script>
+<script>
+  window.OpenBookModal = function (url) {
+    const modal = document.getElementById("bookModal");
+    const frame = document.getElementById("bookFrame");
+    frame.src = url;
+    modal.style.display = "flex";
+  };
+
+  window.CloseBookModal = function () {
+    const modal = document.getElementById("bookModal");
+    const frame = document.getElementById("bookFrame");
+    frame.src = "";
+    modal.style.display = "none";
+  };
+</script>
   </body>
 </html>
